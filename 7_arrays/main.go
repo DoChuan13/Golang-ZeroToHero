@@ -6,6 +6,7 @@ import "fmt"
 // Một Array luôn được cố định kích thức
 // Toàn bộ các phần tử trong một Array phải cùng kiểu dữ liệu với nhau
 // Trong Golang các phần tử trong cùng một Array có địa chỉ ô nhớ kế tiếp nhau
+// Kích thước của một Array được xác định tại thời điểm biên dịch(Compile time) và không thể thay đổi
 
 func main() {
 	// Khai báo một Array integer gồm 4 phần tử
@@ -56,7 +57,34 @@ func main() {
 		}
 		fmt.Printf("\n")
 	}
-	
-	// So sánh 2 Array
 
+	// So sánh 2 Array
+	firstArray := [4]int{1, 2, 3, 4}
+	secondArray := [4]int{1, 2, 3, 4}
+	fmt.Println("firstArray is equal to secondArray:", firstArray == secondArray)
+	firstArray[0] = 0
+	fmt.Println("firstArray is equal to secondArray:", firstArray == secondArray)
+
+	// Khởi tạo mảng với key là index
+	thirdArray := [4]int{
+		1: 10,
+		0: 40,
+		3: 99,
+		2: 9,
+	}
+	fmt.Printf("The value of third array: %#v\n", thirdArray)
+
+	// Các index không được gán giá trị sẽ có giá trị mặc định
+	fouthArray := [3]int{
+		2: 19,
+	}
+	fmt.Printf("The value of fouth array: %#v\n", fouthArray)
+
+	// Trong trường hợp khai báo mảng sử dụng cả 2 cách gán index và ko gán index
+	// Khi này kích thước của mảng = max index + số lượng phần tử không được gán index
+	fifthArray := [...]int{
+		2:  19,
+		20, // index 3
+	}
+	fmt.Printf("The value of fifth array: %#v\n", fifthArray)
 }
