@@ -27,10 +27,11 @@ func main() {
 	// So sánh 2 Slice
 	fourthSlice := []int{1, 2, 3, 4}
 	fifthSlice := []int{1, 2, 3, 4}
-	// Không thể sử dụng toán tử == để so sanh 2 Slice
+	// Không thể sử dụng toán tử == để so sánh 2 Slice
 	isEqual := true
 	if len(fourthSlice) != len(fifthSlice) {
 		isEqual = false
+
 		goto result
 	}
 	for index, _ := range fourthSlice {
@@ -89,24 +90,33 @@ result:
 	// Slice header bao gồm 3 thành phần sau
 	// + Pointer: địa chỉ con trỏ của Backing Array
 	// + Length: độ dài của Slice, len() trả về giá trị này
-	// + Capacity: dung lượng của Slice, cap() trả về giá trị này
+	// + Capacity: dung lượng của Slice, được tính từ startIndex đến cuối Array, cap() trả về giá trị này
 	// Một nil Slice sẽ không có Backing Array
+
+	// Một Slice được tự động thay đổi kích thước khi hàm append() được gọi.
+	// Thay đổi kích thước ở đây có nghĩa là append() thêm các phần tử mới vào cuối Slice và nếu không có đủ dung lượng trong Backing Array,
+	// một mảng mới sẽ được cấp phát. Hàm append() luôn trả về một Slice mới, được cập nhật
+
 	sixthSlice := []int{1, 2, 3, 4}
 	seventhSlice, eighthSlice := sixthSlice[0:2], sixthSlice[1:3]
 
 	// sixthSlice,seventhSlice, eighthSlice sử dụng cùng một Backing Array
-	// Nên khi thay đổi giá trị pử index 1 = 100 thì cả 3 Slice đầu bị thay đổi theo
+	// Nên khi thay đổi giá trị pử index 1 = 123 thì cả 3 Slice đầu bị thay đổi theo
 	// len(seventhSlice) = 2 do được tạo lấy từ 2 phần tử ở 3 index 0, 1
-	// cap(seventhSlice) = 4 do việc sử dụng chung Backing Array nên capacity = 4
+	// cap(seventhSlice) = 4 do startIndex = 0 tính đến cuối Array là có 4 phần tử
 	fmt.Println("Length of seventhSlice:", len(seventhSlice), ", Capacity of seventhSlice:", cap(seventhSlice))
-	eighthSlice = append(eighthSlice, 100)
-	// TODO
-	fmt.Println("Length of eighthSlice:", len(eighthSlice), ", Capacity of seventhSlice:", cap(eighthSlice))
-	fmt.Println("Length of eighthSlice:", len(sixthSlice[2:]), ", Capacity of seventhSlice:", cap(sixthSlice[2:]))
-	sixthSlice[1] = 100
+	sixthSlice[1] = 123
 	fmt.Println("The value of sixthSlice:", sixthSlice)
 	fmt.Println("The value of seventhSlice:", seventhSlice)
 	fmt.Println("The value of eighthSlice:", eighthSlice)
+
+	// Như ở trên function append() sẽ thêm phần tử vào cuối Slice, khi số lượng phần tử = capacity thì function append()
+	// sẽ trả về một Slice mới với Backing Array có size gấp đôi Backing Array trước đó
+	fmt.Println("Length of seventhSlice:", len(seventhSlice), ", Capacity of seventhSlice:", cap(seventhSlice), " before append")
+	seventhSlice = append(seventhSlice, 100)
+	seventhSlice = append(seventhSlice, 100)
+	seventhSlice = append(seventhSlice, 100)
+	fmt.Println("Length of seventhSlice:", len(seventhSlice), ", Capacity of seventhSlice:", cap(seventhSlice), " after append")
 
 	// Để tránh việc sử dụng chung Backing Array khi tạo Slice từ một Slice khác sử dụng append
 	ninthSlice := []int{100}
@@ -115,5 +125,4 @@ result:
 	sixthSlice[0] = 999
 	fmt.Println("The value of sixthSlice:", sixthSlice)
 	fmt.Println("The value of ninthSlice:", ninthSlice)
-
 }
