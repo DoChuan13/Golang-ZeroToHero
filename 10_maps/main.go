@@ -34,4 +34,10 @@ func main() {
 	// Trong trường hợp key không tồn tại thì value sẽ trả về giá trị mặc định của kiểu dữ liệu value
 	value, isExists = secondMap["Quang"]
 	fmt.Println("isExists:", isExists, "value:", value)
+
+	// Xóa một cặp key value trong Map
+	delete(secondMap, "Trung")
+	value, isExists = secondMap["Trung"]
+	fmt.Println("isExists:", isExists, "value:", value)
+
 }
