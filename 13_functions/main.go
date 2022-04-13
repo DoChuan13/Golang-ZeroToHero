@@ -7,7 +7,7 @@ import "fmt"
 // Function trong Golang hỗ trợ tính năng trả về nhiều giá trị
 // Golang không hỗ trợ nạp chồng function
 // Cú pháp
-// func (receiver) name(parameters) (returns) {
+// func name(parameters) (returns) {
 //	-> TODO logic here
 // }
 
@@ -99,6 +99,6 @@ func modifyItemVariadicFunction(slice ...string) {
 	slice[0] = "Quang"
 }
 
-func showLogFirstDefer()  {
+func showLogFirstDefer() {
 	fmt.Println("The first defer")
 }
