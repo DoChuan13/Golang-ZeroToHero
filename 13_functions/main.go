@@ -36,10 +36,10 @@ func main() {
 	fmt.Println("The value of year:", year)
 	fmt.Println("The value of fullName:", fullName)
 
-	// TODO
+	// Truyền một slice qua tham số đầu vào
 	firstSlice := []string{"Trung"}
 	fmt.Println("The value of firstSlice:", firstSlice)
-	addItem(firstSlice)
+	modifyItem(firstSlice)
 	fmt.Println("The value of firstSlice:", firstSlice)
 
 	// Như các function ở trên việc return giá trị trả vè thường khai báo biến trước đó rồi return về giá trị cảu biến đó
@@ -54,8 +54,15 @@ func main() {
 	// Trường hợp không truyền tham số vào function thì tức là một slice nil
 	demoVariadicFunction()
 
-	addItemVariadicFunction(firstSlice...)
-	fmt.Println(firstSlice)
+	modifyItemVariadicFunction(firstSlice...)
+	fmt.Println("The value of firstSlice:", firstSlice)
+
+	// Trong Golang hỗ trợ một từ khóa nhắm mục đích khiến một logic code nào đó được chạy cuối cùng trong function, từ khóa defer
+	defer showLogFirstDefer()
+	fmt.Println("Message before defer")
+
+	// Trong trường hợp có nhiều defer thì thứ tự chạy defer sẽ là LIFO, defer được khai báo trước sẽ được chạy sau
+	defer fmt.Println("The second defer")
 }
 
 func showAddress(year int, fullName string) {
@@ -68,8 +75,9 @@ func showAddress(year int, fullName string) {
 	fmt.Println("The value of fullName in function:", fullName)
 }
 
-func addItem(slice []string) {
-	//slice = append(slice, "Quang")
+func modifyItem(slice []string) {
+	// Việc truyền slice qua tham số của hàm cũng được copy ra một slice khác nhưng slice copy sẽ có chung Backing Arrays với slice gốc
+	// nên việc thay đổi giá trị của slice copy cũng sẽ làm thay đổi giá trị của slice ban đầu
 	slice[0] = "Quang1"
 	fmt.Println("The value of firstSlice in function:", slice)
 }
@@ -86,6 +94,11 @@ func demoVariadicFunction(inputs ...int) {
 	fmt.Printf("Demo variadic function value: %#v\n", inputs)
 }
 
-func addItemVariadicFunction(slice ...string) {
+func modifyItemVariadicFunction(slice ...string) {
+	// Cũng giống như việc truyền slice qua tham số đầu vào
 	slice[0] = "Quang"
+}
+
+func showLogFirstDefer()  {
+	fmt.Println("The first defer")
 }
