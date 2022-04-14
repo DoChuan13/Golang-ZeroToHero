@@ -57,6 +57,16 @@ func main() {
 	modifyItemVariadicFunction(firstSlice...)
 	fmt.Println("The value of firstSlice:", firstSlice)
 
+	// Anonymous Functions là các function có thể được định nghĩa trực tiếp trong một function khác, các function này chỉ dùng 1 lần
+	func (a, b int) {
+		fmt.Println("Demo Anonymous Functions, sum of a and b:", a+b)
+	}(10, 15)
+
+	// Ta cũng có thể sử dụng function để định nghĩa một kiểu dữ liệu
+	type FuncDataType func(a, b int) int
+	var sumFunc FuncDataType = sum
+	fmt.Println("Test FuncDataType:", sumFunc(1,2))
+
 	// Trong Golang hỗ trợ một từ khóa nhắm mục đích khiến một logic code nào đó được chạy cuối cùng trong function, từ khóa defer
 	defer showLogFirstDefer()
 	fmt.Println("Message before defer")
